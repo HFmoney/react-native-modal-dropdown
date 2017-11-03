@@ -6,6 +6,7 @@
 
 import React, {
   Component,
+  PropTypes,
 } from 'react';
 
 import {
@@ -21,8 +22,6 @@ import {
   Modal,
   ActivityIndicator,
 } from 'react-native';
-
-const PropTypes = require('prop-types');
 
 const TOUCHABLE_ELEMENTS = ['TouchableHighlight', 'TouchableOpacity', 'TouchableWithoutFeedback', 'TouchableNativeFeedback'];
 
@@ -186,16 +185,17 @@ export default class ModalDropdown extends Component {
       let animationType = this.props.animated ? 'fade' : 'none';
       return (
         <Modal animationType={animationType}
-               visible={true}
                transparent={true}
                onRequestClose={this._onRequestClose.bind(this)}
                supportedOrientations={['portrait', 'portrait-upside-down', 'landscape', 'landscape-left', 'landscape-right']}>
           <TouchableWithoutFeedback accessible={this.props.accessible}
                                     disabled={!this.state.showDropdown}
                                     onPress={this._onModalPress.bind(this)}>
-            <View style={styles.modal}>
-              <View style={[styles.dropdown, this.props.dropdownStyle, frameStyle]}>
-                {this.state.loading ? this._renderLoading() : this._renderDropdown()}
+            <View style={[styles.modal]}>
+              <View style={[this.props.modalStyle]}>
+                <View style={[styles.dropdown, this.props.dropdownStyle, frameStyle]}>
+                  {this.state.loading ? this._renderLoading() : this._renderDropdown()}
+                </View>
               </View>
             </View>
           </TouchableWithoutFeedback>
